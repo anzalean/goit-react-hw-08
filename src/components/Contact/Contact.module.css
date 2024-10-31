@@ -1,0 +1,37 @@
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+.contact div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contact p {
+  margin: 0;
+}
+
+.contact button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.contact button:hover {
+  background-color: #e41f1f;
+}
+.contactId{
+    display: none;
+}
