@@ -1,32 +1,32 @@
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
+import HomePage from './pages/HomePage/HomePage';
+import ContactsPage from './pages/ContactsPage/ContactsPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from './redux/contactsOps';
-import { selectFilteredContacts, selectLoading, selectError } from './redux/contactsSlice';
-import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SearchBox';
-import ContactForm from './components/ContactForm/ContactForm';
+import { useDispatch } from 'react-redux';
+import { refreshUser } from './redux/auth/operations';
 
-const App = () => {
+function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectFilteredContacts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
-    <>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <ContactList contacts={contacts} />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/contacts" element={<PrivateRoute component={<ContactsPage />} redirectTo="/login" />} />
+        <Route path="/login" element={<RestrictedRoute component={<LoginPage />} redirectTo="/contacts" />} />
+        <Route path="/register" element={<RestrictedRoute component={<RegistrationPage />} redirectTo="/contacts" />} />
+      </Route>
+    </Routes>
   );
-};
+}
 
 export default App;
