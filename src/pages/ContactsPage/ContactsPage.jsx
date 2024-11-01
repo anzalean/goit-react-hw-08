@@ -9,7 +9,7 @@ import { selectFilteredContacts, selectLoading, selectError } from '../../redux/
 const ContactsPage = () => {
 const dispatch = useDispatch();
   const contacts = useSelector(selectFilteredContacts);
-  const loading = useSelector(selectLoading);
+  const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const dispatch = useDispatch();
             <h1>Phonebook</h1>
             <ContactForm />
             <SearchBox />
-            {loading && <p>Loading...</p>}
+            {isLoading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             <ContactList contacts={contacts} />
         </div>
